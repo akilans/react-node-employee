@@ -1,8 +1,17 @@
 const express = require('express');
 const jwt = require("jsonwebtoken");
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
 
 const app = express();
+
+mongoose.connect("mongodb://localhost:27017/test",(err)=>{
+    if(err){
+        console.log(err);
+    }else{
+        console.log("Mongodb connected");
+    }
+})
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
