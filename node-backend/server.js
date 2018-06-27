@@ -2,13 +2,20 @@ const express = require('express');
 const jwt = require("jsonwebtoken");
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
+const cors = require('cors');
+
+// Load Employee model
+require("./model/Employee");
+const Employee = mongoose.model('employees');
+
 
 const app = express();
+app.use(cors()); // Allow Cross origin request
 
-mongoose.connect("mongodb://localhost:27017/test",(err)=>{
-    if(err){
+mongoose.connect("mongodb://localhost:27017/employee", (err) => {
+    if (err) {
         console.log(err);
-    }else{
+    } else {
         console.log("Mongodb connected");
     }
 })
@@ -24,13 +31,32 @@ app.get("/api", (req, res) => {
 })
 
 // Get all the employees after successfull verification
-app.get("/api/getEmployees", verifyToken, (req, res) => {
-    res.json({
-        users: {
-            name: "Akilan",
-            location: "Bangalore"
+app.get("/api/getEmployees", (req, res) => {
+    /*
+    let newEmp = new Employee();
+    newEmp.id=4;
+    newEmp.name="Employee4";
+    newEmp.location="Mysore";
+    newEmp.role="Senior Engineer";
+    newEmp.email="employee4@infosys.com";
+    newEmp.ext=142;
+
+    
+    newEmp.save((err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            console.log(result);
         }
-    });
+    })
+    */
+
+    Employee.find({}).then(employees => {
+        console.log(employees);
+        res.json({
+            employees: employees
+        });
+    })
 })
 
 // Login action & set JSON web token

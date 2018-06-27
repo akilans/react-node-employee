@@ -3,19 +3,19 @@ import "./dashboard.css"
 
 const employees = [
   {
-    "id":1,
+    "id": 1,
     "name": "Employee1",
     "location": "Bangalore",
     "role": "Manager"
   },
   {
-    "id":2,
+    "id": 2,
     "name": "Employee2",
     "location": "Pune",
     "role": "Lead"
   },
   {
-    "id":3,
+    "id": 3,
     "name": "Employee3",
     "location": "Hyderabad",
     "role": "Senior"
@@ -23,6 +23,31 @@ const employees = [
 ];
 
 class index extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      employees: []
+    };
+  }
+
+  componentDidMount() {
+    this.getEmployees();
+    console.log("Calling didmount");
+    console.log(this.state.employees);
+  }
+
+  getEmployees() {
+    fetch("http://localhost:5000/api/getEmployees")
+    .then((response) => response.json())
+    .then((data)=>{
+      console.log(data.employees);
+      this.setState({
+        employees: data.employees
+      });
+    })
+  }
+
 
   render() {
     return (
@@ -38,19 +63,19 @@ class index extends Component {
             </tr>
           </thead>
           <tbody>
-              {employees.map((emp, index) => (
-                <tr>
-                  <th>{emp.id}</th>
-                  <td>{emp.name}</td>
-                  <td>{emp.location}</td>
-                  <td>{emp.role}</td>
-                  <td>
+            {this.state.employees.map((emp, index) => (
+              <tr key={index}>
+                <th>{emp.id}</th>
+                <td>{emp.name}</td>
+                <td>{emp.location}</td>
+                <td>{emp.role}</td>
+                <td>
                   <button type="button" className="btn btn-primary">Edit</button>
                   <button type="button" className="btn btn-danger">Delete</button>
-                  </td>
-                </tr>
-              ))}
-  
+                </td>
+              </tr>
+            ))}
+
           </tbody>
         </table>
       </div>
