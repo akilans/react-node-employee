@@ -2,6 +2,21 @@ import React, { Component } from 'react'
 import "./login.css"
 
 class index extends Component {
+
+    constructor(){
+        super();
+        this.loginAction = this.loginAction.bind(this);
+    }
+
+    loginAction(e){
+        e.preventDefault();
+        console.log("Submitted");
+        console.log(this.refs);
+        console.log(this.refs.user_name.value);
+        console.log(this.refs.password.value)
+        
+    }
+
     render() {
         return (
             <div className="container">
@@ -19,17 +34,17 @@ class index extends Component {
                                     Login
   </div>
                                 <div className="card-body">
-                                    <form>
+                                    <form onSubmit={this.loginAction}>
                                         <div className="form-group">
-                                            <label for="exampleInputEmail1">Email</label>
-                                            <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                                            <label htmlFor="userName">User Name</label>
+                                            <input type="text" className="form-control" id="userName" placeholder="Enter user name" ref="user_name"/>
                                         </div>
                                         <div className="form-group">
-                                            <label for="exampleInputPassword1">Password</label>
-                                            <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                            <label htmlFor="Password">Password</label>
+                                            <input type="password" className="form-control" id="Password" placeholder="Password" ref="password"/>
                                         </div>
 
-                                        <button type="submit" className="btn btn-primary">Submit</button>
+                                        <button type="submit" className="btn btn-primary" >Submit</button>
                                     </form>
                                 </div>
                             </div>

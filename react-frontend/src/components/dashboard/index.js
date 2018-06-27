@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "./dashboard.css"
 
+/*
 const employees = [
   {
     "id": 1,
@@ -21,6 +22,7 @@ const employees = [
     "role": "Senior"
   }
 ];
+*/
 
 class index extends Component {
 
@@ -33,15 +35,13 @@ class index extends Component {
 
   componentDidMount() {
     this.getEmployees();
-    console.log("Calling didmount");
-    console.log(this.state.employees);
   }
 
   getEmployees() {
     fetch("http://localhost:5000/api/getEmployees")
     .then((response) => response.json())
     .then((data)=>{
-      console.log(data.employees);
+      console.log(data.employees); // Getting array from object
       this.setState({
         employees: data.employees
       });
