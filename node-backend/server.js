@@ -31,7 +31,7 @@ app.get("/api", (req, res) => {
 })
 
 // Get all the employees after successfull verification
-app.get("/api/getEmployees", (req, res) => {
+app.get("/api/getEmployees",verifyToken, (req, res) => {
     /*
     let newEmp = new Employee();
     newEmp.id=4;
@@ -66,9 +66,9 @@ app.post("/api/login", (req, res) => {
     if (req.body != null) {
         let login_data = req.body;
         console.log(login_data);
-        if (login_data.name == "admin" && login_data.password == "admin") {
+        if (login_data.user_name == "admin" && login_data.password == "admin") {
             user = {
-                name: "admin",
+                name: login_data.user_name,
                 role: "admin"
             }
 

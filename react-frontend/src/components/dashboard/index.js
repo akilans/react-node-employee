@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from "react-router-dom"
 import "./dashboard.css"
 
 /*
@@ -29,27 +30,82 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      employees: []
+      employees: [],
+      redirect: false
     };
   }
 
+  componentWillMount() {
+    let token = this.getToken();
+
+    if (token) {
+      document.getElementById('loginLink').style.display = 'none';
+      document.getElementById('dashboardLink').style.display = 'block';
+      document.getElementById('logoutLink').style.display = 'block';
+    }
+
+  }
+
   componentDidMount() {
-    this.getEmployees();
+    let token_data = JSON.parse(localStorage.getItem("token_data"));
+    if (!token_data) {
+      this.setState({
+        redirect: true
+      });
+    } else {
+      this.getEmployees();
+    }
+  }
+
+
+  getToken() {
+    let token_data = JSON.parse(localStorage.getItem("token_data"));
+    if (!token_data) {
+      this.setState({
+        redirect: true
+      });
+    } else {
+      return token_data.token;
+    }
+
   }
 
   getEmployees() {
-    fetch("http://localhost:5000/api/getEmployees")
-    .then((response) => response.json())
-    .then((data)=>{
-      console.log(data.employees); // Getting array from object
-      this.setState({
-        employees: data.employees
-      });
+    fetch("http://localhost:5000/api/getEmployees", {
+      method: 'get',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.getToken()
+      }
     })
+      .then((response) => {
+        if (response.status === 403) {
+          localStorage.removeItem("token_data")
+          this.setState({
+            redirect: true
+          });
+          console.log("Access Denied");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data.employees); // Getting array from object
+        this.setState({
+          employees: data.employees,
+          redirect: false
+        });
+      }).catch((err) => console.log(err))
   }
 
 
   render() {
+
+    if (this.state.redirect) {
+      return <Redirect to='/' />;
+    }
+
     return (
       <div>
         <table className="table table-hover employee-table">

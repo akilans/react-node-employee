@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import login from "./components/login"
-import dashboard from "./components/dashboard"
+import login from "./components/login";
+import dashboard from "./components/dashboard";
+import logout from "./components/logout";
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={login} />
           <Route exact path="/dashboard" component={dashboard} />
+          <Route exact path="/logout" component={logout} />
         </div>
       </Router>
 
