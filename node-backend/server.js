@@ -32,29 +32,25 @@ app.get("/api", (req, res) => {
 
 // Get all the employees after successfull verification
 app.get("/api/getEmployees", verifyToken, (req, res) => {
-    /*
-    let newEmp = new Employee();
-    newEmp.id=4;
-    newEmp.name="Employee4";
-    newEmp.location="Mysore";
-    newEmp.role="Senior Engineer";
-    newEmp.email="employee4@infosys.com";
-    newEmp.ext=142;
-
-    
-    newEmp.save((err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            console.log(result);
-        }
-    })
-    */
 
     Employee.find({}).then(employees => {
         console.log(employees);
         res.json({
             employees: employees
+        });
+    })
+})
+
+
+// Get theemployee by id after successfull verification
+app.get("/api/getEmployee/:id", verifyToken, (req, res) => {
+
+    let emp_id = req.params.id;
+
+    Employee.find({id:emp_id}).then(employee => {
+        console.log(employee);
+        res.json({
+            employee: employee
         });
     })
 })

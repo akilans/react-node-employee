@@ -50,7 +50,7 @@ class index extends Component {
   }
 
   componentDidMount() {
-      this.getEmployees();
+    this.getEmployees();
   }
 
   getEmployees() {
@@ -92,7 +92,7 @@ class index extends Component {
     return (
       <div>
 
-        <div className="float-right">
+        <div className="float-right addEmployeeButton">
           <Link to="/addEmployee" className="btn btn-success" replace>Add Employee</Link>
         </div>
 
@@ -115,7 +115,7 @@ class index extends Component {
                 <td>{emp.location}</td>
                 <td>{emp.role}</td>
                 <td>
-                  <button type="button" className="btn btn-primary">Edit</button>
+                  <Link to={`/editEmployee/${emp.id}`} className="btn btn-primary" replace>Edit</Link>
                   <button type="button" className="btn btn-danger">Delete</button>
                 </td>
               </tr>
