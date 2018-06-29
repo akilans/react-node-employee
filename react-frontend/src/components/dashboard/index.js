@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import "./dashboard.css"
+import Auth from "../auth"
 
 /*
 const employees = [
@@ -36,38 +37,20 @@ class index extends Component {
   }
 
   componentWillMount() {
-    let token = this.getToken();
 
-    if (token) {
-      document.getElementById('loginLink').style.display = 'none';
-      document.getElementById('dashboardLink').style.display = 'block';
-      document.getElementById('logoutLink').style.display = 'block';
+    if (!Auth.isAuthenticated()) {
+      this.setState({
+        redirect: true
+      });
     }
+    document.getElementById('loginLink').style.display = 'none';
+    document.getElementById('dashboardLink').style.display = 'block';
+    document.getElementById('logoutLink').style.display = 'block';
 
   }
 
   componentDidMount() {
-    let token_data = JSON.parse(localStorage.getItem("token_data"));
-    if (!token_data) {
-      this.setState({
-        redirect: true
-      });
-    } else {
       this.getEmployees();
-    }
-  }
-
-
-  getToken() {
-    let token_data = JSON.parse(localStorage.getItem("token_data"));
-    if (!token_data) {
-      this.setState({
-        redirect: true
-      });
-    } else {
-      return token_data.token;
-    }
-
   }
 
   getEmployees() {
@@ -76,7 +59,7 @@ class index extends Component {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.getToken()
+        'Authorization': 'Bearer ' + Auth.getToken()
       }
     })
       .then((response) => {
@@ -108,6 +91,12 @@ class index extends Component {
 
     return (
       <div>
+
+        <div className="float-right">
+          <Link to="/addEmployee" className="btn btn-success" replace>Add Employee</Link>
+        </div>
+
+
         <table className="table table-hover employee-table">
           <thead>
             <tr>

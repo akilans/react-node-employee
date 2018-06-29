@@ -31,7 +31,7 @@ app.get("/api", (req, res) => {
 })
 
 // Get all the employees after successfull verification
-app.get("/api/getEmployees",verifyToken, (req, res) => {
+app.get("/api/getEmployees", verifyToken, (req, res) => {
     /*
     let newEmp = new Employee();
     newEmp.id=4;
@@ -58,6 +58,43 @@ app.get("/api/getEmployees",verifyToken, (req, res) => {
         });
     })
 })
+
+
+// Add Employee after successfull token verification
+app.post("/api/addEmployee", verifyToken, (req, res) => {
+
+    if (req.body != null) {
+        let emp_data = req.body;
+        console.log(emp_data);
+
+        let newEmp = new Employee();
+        newEmp.id = emp_data.emp_id;
+        newEmp.name = emp_data.emp_name;
+        newEmp.location = emp_data.emp_location;
+        newEmp.role = emp_data.emp_role;
+        newEmp.email = emp_data.emp_email;
+        newEmp.ext = emp_data.emp_ext;
+
+
+        newEmp.save((err, result) => {
+            if (err) {
+                res.json({
+                    error: "Add Employee failed"
+                });
+            } else {
+                console.log(result);
+                res.json({
+                    success: "Employee Added Successfully"
+                });
+            }
+        })
+    } else {
+        res.sendStatus(403);
+    }
+
+})
+
+
 
 // Login action & set JSON web token
 
