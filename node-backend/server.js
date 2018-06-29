@@ -42,7 +42,7 @@ app.get("/api/getEmployees", verifyToken, (req, res) => {
 })
 
 
-// Get theemployee by id after successfull verification
+// Get the employee by id after successfull verification
 app.get("/api/getEmployee/:id", verifyToken, (req, res) => {
 
     let emp_id = req.params.id;
@@ -53,6 +53,25 @@ app.get("/api/getEmployee/:id", verifyToken, (req, res) => {
             employee: employee
         });
     })
+})
+
+// Delete the employee by id after successfull verification
+app.get("/api/deleteEmployee/:id", verifyToken, (req, res) => {
+
+    let emp_id = req.params.id;
+
+    Employee.findByIdAndRemove(emp_id,(err,response)=>{
+        if(err){
+            res.json({
+                error: "Failed to delete"
+            });
+        }else{
+            res.json({
+                success: "Employee deleted successfully"
+            });
+        }
+    })
+
 })
 
 
@@ -90,6 +109,42 @@ app.post("/api/addEmployee", verifyToken, (req, res) => {
 
 })
 
+
+// Edit Employee after successfull token verification
+app.post("/api/editEmployee", verifyToken, (req, res) => {
+
+    if (req.body != null) {
+        let emp_data = req.body;
+        console.log(emp_data);
+
+       let uid = emp_data.emp_uid;
+
+        let updateData = {
+            id: emp_data.emp_id,
+            name: emp_data.emp_name,
+            location: emp_data.emp_location,
+            role: emp_data.emp_role,
+            email: emp_data.emp_email,
+            ext: emp_data.emp_ext
+        }
+
+        Employee.findByIdAndUpdate(uid,updateData,(err,result)=>{
+            if (err) {
+                res.json({
+                    error: "Edit Employee failed"
+                });
+            } else {
+                console.log(result);
+                res.json({
+                    success: "Employee Updated Successfully"
+                });
+            }
+        })
+    } else {
+        res.sendStatus(403);
+    }
+
+})
 
 
 // Login action & set JSON web token

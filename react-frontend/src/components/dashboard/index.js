@@ -32,7 +32,8 @@ class index extends Component {
     super(props);
     this.state = {
       employees: [],
-      redirect: false
+      redirect: false,
+      deleteEmployee_error: ""
     };
   }
 
@@ -51,6 +52,41 @@ class index extends Component {
 
   componentDidMount() {
     this.getEmployees();
+  }
+
+  deleteEmp(id){
+
+      let url = `http://localhost:5000/api/deleteEmployee/${id}`;
+
+
+      fetch(url, {
+        method: 'get',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + Auth.getToken()
+        }
+      })
+        .then((response) => {
+          if (response.status === 403) {
+            localStorage.removeItem("token_data")
+            this.setState({
+              redirect: true
+            });
+            console.log("Access Denied");
+          } else {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          if(data.error){
+            this.setState({
+              deleteEmployee_error:"Failed to delete Employee"
+            })
+          }else{
+            this.getEmployees();
+          }
+        }).catch((err) => console.log(err))
   }
 
   getEmployees() {
@@ -96,6 +132,12 @@ class index extends Component {
           <Link to="/addEmployee" className="btn btn-success" replace>Add Employee</Link>
         </div>
 
+        {this.state.deleteEmployee_error ?
+          <div className="alert alert-danger" role="alert">
+              {this.state.deleteEmployee_error}
+          </div> : ""
+        }
+
 
         <table className="table table-hover employee-table">
           <thead>
@@ -116,7 +158,7 @@ class index extends Component {
                 <td>{emp.role}</td>
                 <td>
                   <Link to={`/editEmployee/${emp.id}`} className="btn btn-primary" replace>Edit</Link>
-                  <button type="button" className="btn btn-danger">Delete</button>
+                  <button type="button" className="btn btn-danger" onClick={(e)=>this.deleteEmp(emp._id)} >Delete</button>
                 </td>
               </tr>
             ))}

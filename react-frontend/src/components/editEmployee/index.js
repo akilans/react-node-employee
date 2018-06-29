@@ -8,6 +8,7 @@ export default class index extends Component {
     constructor(props) {
         super(props);
         this.editEmployeeAction = this.editEmployeeAction.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.state = {
             editEmployee_error: "",
             employee: [],
@@ -25,13 +26,12 @@ export default class index extends Component {
         document.getElementById('loginLink').style.display = 'none';
         document.getElementById('dashboardLink').style.display = 'block';
         document.getElementById('logoutLink').style.display = 'block';
-        
+
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getEmployee();
-        
     }
 
     getEmployee() {
@@ -39,38 +39,67 @@ export default class index extends Component {
         let url = `http://localhost:5000/api/getEmployee/${emp_id}`;
 
         fetch(url, {
-          method: 'get',
-          headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + Auth.getToken()
-          }
-        })
-          .then((response) => {
-            if (response.status === 403) {
-              localStorage.removeItem("token_data")
-              this.setState({
-                redirect: true
-              });
-              console.log("Access Denied");
-            } else {
-              return response.json();
+            method: 'get',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
             }
-          })
-          .then((data) => {
-            console.log(data.employee); // Getting array from object
-            this.setState({
-              employee: data.employee,
-              redirect: false
-            });
-          }).catch((err) => console.log(err))
-      }
+        })
+            .then((response) => {
+                if (response.status === 403) {
+                    localStorage.removeItem("token_data")
+                    this.setState({
+                        redirect: true
+                    });
+                    console.log("Access Denied");
+                } else {
+                    return response.json();
+                }
+            })
+            .then((data) => {
+                console.log(data.employee); // Getting array from object
+                this.setState({
+                    employee: data.employee,
+                    redirect: false
+                });
+                console.log("Printing state");
+                console.log(this.state.employee[0]);
+            }).catch((err) => console.log(err))
+    }
 
 
+    handleInputChange() {
+ 
+        let emp_uid = this.refs.emp_uid.value;
+        let emp_id = this.refs.emp_id.value;
+        let emp_name = this.refs.emp_name.value;
+        let emp_location = this.refs.emp_location.value;
+        let emp_role = this.refs.emp_role.value;
+        let emp_email = this.refs.emp_email.value;
+        let emp_ext = this.refs.emp_ext.value;
 
-    editEmployeeAction(e){
+        let emp_data = [{
+            emp_uid: emp_uid,
+            emp_id: emp_id,
+            emp_name: emp_name,
+            emp_location: emp_location,
+            emp_role: emp_role,
+            emp_email: emp_email,
+            emp_ext: emp_ext
+        }]
+
+        this.setState({
+            employee: emp_data
+        })
+
+    }
+
+
+    editEmployeeAction(e) {
         e.preventDefault();
 
+        let emp_uid = this.refs.emp_uid.value;
         let emp_id = this.refs.emp_id.value;
         let emp_name = this.refs.emp_name.value;
         let emp_location = this.refs.emp_location.value;
@@ -79,6 +108,7 @@ export default class index extends Component {
         let emp_ext = this.refs.emp_ext.value;
 
         let emp_data = {
+            emp_uid: emp_uid,
             emp_id: emp_id,
             emp_name: emp_name,
             emp_location: emp_location,
@@ -113,10 +143,10 @@ export default class index extends Component {
 
 
 
-    
+
     render() {
 
-        
+
 
         if (this.state.redirect) {
             return <Redirect to='/' />;
@@ -132,63 +162,57 @@ export default class index extends Component {
                         </div>
                         <div className="col-8 edit-employee-form">
 
-                       
-                        {this.state.employee.map((emp, index) => (
-                            
-                              <p key={index} >{emp.id}
-                              {emp.name}
-                              {emp.location}
-                              {emp.role}</p>
-                              
-                          ))}
 
-                            <div className="card">
-                                <div className="card-header">Add Employee</div>
-                                {this.state.editEmployee_error ?
-                                    <div className="alert alert-danger" role="alert">
-                                        {this.state.editEmployee_error}
-                                    </div> : ""
-                                }
+                            {this.state.employee.map((emp, index) => (
 
-                                <div className="card-body">
-                                    <form onSubmit={this.editEmployeeAction}>
-                                        <div className="form-group">
-                                            <label htmlFor="emp_id">ID</label>
-                                            <input type="text" className="form-control" id="emp_id" placeholder="Enter ID" ref="emp_id" />
-                                        </div>
+                                <div key={index} className="card">
+                                    <div className="card-header">Edit Employee</div>
+                                    {this.state.editEmployee_error ?
+                                        <div className="alert alert-danger" role="alert">
+                                            {this.state.editEmployee_error}
+                                        </div> : ""
+                                    }
 
-                                        <div className="form-group">
-                                            <label htmlFor="emp_name">Name</label>
-                                            <input type="text" className="form-control" id="emp_name" placeholder="Enter Name" ref="emp_name" />
-                                        </div>
+                                    <div className="card-body">
+                                        <form onSubmit={this.editEmployeeAction}>
+                                            <input type="hidden" id="emp_uid" ref="emp_uid" value={emp._id} onChange={this.handleInputChange} />
+                                            <div className="form-group">
+                                                <label htmlFor="emp_id">ID</label>
+                                                <input type="text" className="form-control" id="emp_id" placeholder="Enter ID" ref="emp_id" value={emp.id} onChange={this.handleInputChange} />
+                                            </div>
 
-                                        <div className="form-group">
-                                            <label htmlFor="emp_location">Location</label>
-                                            <input type="text" className="form-control" id="emp_location" placeholder="Enter Location" ref="emp_location" />
-                                        </div>
+                                            <div className="form-group">
+                                                <label htmlFor="emp_name">Name</label>
+                                                <input type="text" className="form-control" id="emp_name" placeholder="Enter Name" ref="emp_name" value={emp.name} onChange={this.handleInputChange} />
+                                            </div>
 
-                                        <div className="form-group">
-                                            <label htmlFor="emp_role">Role</label>
-                                            <input type="text" className="form-control" id="emp_role" placeholder="Enter Role" ref="emp_role" />
-                                        </div>
+                                            <div className="form-group">
+                                                <label htmlFor="emp_location">Location</label>
+                                                <input type="text" className="form-control" id="emp_location" placeholder="Enter Location" ref="emp_location" value={emp.location} onChange={this.handleInputChange} />
+                                            </div>
 
-                                        <div className="form-group">
-                                            <label htmlFor="emp_email">Email</label>
-                                            <input type="text" className="form-control" id="emp_email" placeholder="Enter Email" ref="emp_email" />
-                                        </div>
+                                            <div className="form-group">
+                                                <label htmlFor="emp_role">Role</label>
+                                                <input type="text" className="form-control" id="emp_role" placeholder="Enter Role" ref="emp_role" value={emp.role} onChange={this.handleInputChange} />
+                                            </div>
 
-                                        <div className="form-group">
-                                            <label htmlFor="emp_ext">Extention</label>
-                                            <input type="text" className="form-control" id="emp_ext" placeholder="Enter Extention" ref="emp_ext" />
-                                        </div>
+                                            <div className="form-group">
+                                                <label htmlFor="emp_email">Email</label>
+                                                <input type="text" className="form-control" id="emp_email" placeholder="Enter Email" ref="emp_email" value={emp.email} onChange={this.handleInputChange} />
+                                            </div>
 
-                                        <button type="submit" className="btn btn-primary" >Submit</button>
-                                    </form>
+                                            <div className="form-group">
+                                                <label htmlFor="emp_ext">Extention</label>
+                                                <input type="text" className="form-control" id="emp_ext" placeholder="Enter Extention" ref="emp_ext" value={emp.ext} onChange={this.handleInputChange} />
+                                            </div>
+
+                                            <button type="submit" className="btn btn-primary" >Submit</button>
+                                        </form>
+                                    </div>
+
                                 </div>
 
-                            </div>
-
-
+                            ))}
 
 
                         </div>
