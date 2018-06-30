@@ -3,10 +3,6 @@ import { Redirect } from "react-router-dom"
 
 class index extends Component {
 
-    constructor() {
-        super();
-    }
-
     componentWillMount(){
         localStorage.removeItem("token_data");
     }

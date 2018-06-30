@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import Auth from "../auth"
 import "./form.css"
 
@@ -175,35 +175,35 @@ export default class index extends Component {
 
                                     <div className="card-body">
                                         <form onSubmit={this.editEmployeeAction}>
-                                            <input type="hidden" id="emp_uid" ref="emp_uid" value={emp._id} onChange={this.handleInputChange} />
+                                            <input type="hidden" id="emp_uid" ref="emp_uid" defaultValue={emp._id} onChange={this.handleInputChange} />
                                             <div className="form-group">
                                                 <label htmlFor="emp_id">ID</label>
-                                                <input type="text" className="form-control" id="emp_id" placeholder="Enter ID" ref="emp_id" value={emp.id} onChange={this.handleInputChange} />
+                                                <input type="text" className="form-control" id="emp_id" placeholder="Enter ID" ref="emp_id" defaultValue={emp.id} onChange={this.handleInputChange} />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="emp_name">Name</label>
-                                                <input type="text" className="form-control" id="emp_name" placeholder="Enter Name" ref="emp_name" value={emp.name} onChange={this.handleInputChange} />
+                                                <input type="text" className="form-control" id="emp_name" placeholder="Enter Name" ref="emp_name" defaultValue={emp.name} onChange={this.handleInputChange} />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="emp_location">Location</label>
-                                                <input type="text" className="form-control" id="emp_location" placeholder="Enter Location" ref="emp_location" value={emp.location} onChange={this.handleInputChange} />
+                                                <input type="text" className="form-control" id="emp_location" placeholder="Enter Location" ref="emp_location" defaultValue={emp.location} onChange={this.handleInputChange} />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="emp_role">Role</label>
-                                                <input type="text" className="form-control" id="emp_role" placeholder="Enter Role" ref="emp_role" value={emp.role} onChange={this.handleInputChange} />
+                                                <input type="text" className="form-control" id="emp_role" placeholder="Enter Role" ref="emp_role" defaultValue={emp.role} onChange={this.handleInputChange} />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="emp_email">Email</label>
-                                                <input type="text" className="form-control" id="emp_email" placeholder="Enter Email" ref="emp_email" value={emp.email} onChange={this.handleInputChange} />
+                                                <input type="text" className="form-control" id="emp_email" placeholder="Enter Email" ref="emp_email" defaultValue={emp.email} onChange={this.handleInputChange} />
                                             </div>
 
                                             <div className="form-group">
                                                 <label htmlFor="emp_ext">Extention</label>
-                                                <input type="text" className="form-control" id="emp_ext" placeholder="Enter Extention" ref="emp_ext" value={emp.ext} onChange={this.handleInputChange} />
+                                                <input type="text" className="form-control" id="emp_ext" placeholder="Enter Extention" ref="emp_ext" defaultValue={emp.ext} onChange={this.handleInputChange} />
                                             </div>
 
                                             <button type="submit" className="btn btn-primary" >Submit</button>

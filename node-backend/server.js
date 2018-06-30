@@ -12,7 +12,10 @@ const Employee = mongoose.model('employees');
 const app = express();
 app.use(cors()); // Allow Cross origin request
 
-mongoose.connect("mongodb://localhost:27017/employee", (err) => {
+const db = require("./config/dev");
+
+
+mongoose.connect(db.mongoURL, (err) => {
     if (err) {
         console.log(err);
     } else {

@@ -77,7 +77,7 @@ class index extends Component {
                         <div className="col">
 
                         </div>
-                        <div className="col-5 login-form">
+                        <div className="col-sm-8 login-form">
 
 
                             <div className="card">
