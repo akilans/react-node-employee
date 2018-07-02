@@ -7,7 +7,9 @@
       "jest": {
           "collectCoverageFrom": [
             "src/**/*.{js,jsx}",
-            "!<rootDir>/node_modules/"
+            "!<rootDir>/node_modules/",
+            "!src/index.js",
+            "!src/registerServiceWorker.js"
           ],
           "coverageThreshold": {
             "global": {
@@ -22,7 +24,9 @@
           ]
       }
 
-  * CI=true npm test -- --coverage - Run non interactive mode with coverage
+  * CI=true npm test -- --coverage - Run non interactive mode with coverage in Linux machine
+  
+  * set CI=true&&npm test -- --coverage - Run non interactive mode with coverage in Windows machine
 
   * npm install --save enzyme enzyme-adapter-react-16 react-test-renderer - Additional testing modules. Add this config in setupTest.js file
 
