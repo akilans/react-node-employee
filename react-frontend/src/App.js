@@ -20,7 +20,6 @@ class App extends Component {
           <Route exact path="/logout" component={logout} />
         </div>
       </Router>
-
     );
   }
 }

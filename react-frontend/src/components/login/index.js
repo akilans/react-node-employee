@@ -14,14 +14,11 @@ class index extends Component {
     }
 
     componentWillMount(){
-        console.log(localStorage.getItem("token_data"));
+        //console.log(localStorage.getItem("token_data"));
         if(localStorage.getItem("token_data")){
             this.setState({
                 redirect:true
             });
-        }else{
-            document.getElementById('dashboardLink').style.display = 'none';
-            document.getElementById('logoutLink').style.display = 'none';
         }
     }
 

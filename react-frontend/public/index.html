@@ -72,6 +72,17 @@
   <script src="%PUBLIC_URL%/js/jquery-3.3.1.slim.min.js"></script>
   <script src="%PUBLIC_URL%/js/popper.min.js"></script>
   <script src="%PUBLIC_URL%/js/bootstrap.min.js"></script>
+  <script>
+    if (localStorage.getItem("token_data") === null) {
+      document.getElementById('dashboardLink').style.display = 'none';
+      document.getElementById('logoutLink').style.display = 'none';
+      document.getElementById('loginLink').style.display = 'block';
+    } else {
+      document.getElementById('loginLink').style.display = 'none';
+      document.getElementById('dashboardLink').style.display = 'block';
+      document.getElementById('logoutLink').style.display = 'block';
+    }
+  </script>
 
 </body>
 
