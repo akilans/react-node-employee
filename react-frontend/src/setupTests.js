@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 
+
 // react-testing-library renders your components to document.body,
 // this will ensure they're removed after each test.
 import 'react-testing-library/cleanup-after-each';
@@ -11,7 +12,7 @@ import 'react-testing-library/cleanup-after-each';
 // this adds jest-dom's custom assertions
 import 'jest-dom/extend-expect';
 
-
+/*
 
 class LocalStorageMock {
     constructor() {
@@ -36,3 +37,10 @@ class LocalStorageMock {
   }
 
 global.localStorage = new LocalStorageMock
+*/
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn()
+};
+global.localStorage = localStorageMock

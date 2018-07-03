@@ -89,11 +89,11 @@ class index extends Component {
                                     <form onSubmit={this.loginAction}>
                                         <div className="form-group">
                                             <label htmlFor="userName">User Name</label>
-                                            <input type="text" className="form-control" id="userName" placeholder="Enter user name" ref="user_name" />
+                                            <input type="text" className="form-control" id="userName" placeholder="Enter user name" ref="user_name" value=""/>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="Password">Password</label>
-                                            <input type="password" className="form-control" id="Password" placeholder="Password" ref="password" />
+                                            <input type="password" className="form-control" id="Password" placeholder="Password" ref="password" value="" />
                                         </div>
 
                                         <button type="submit" className="btn btn-primary" >Submit</button>

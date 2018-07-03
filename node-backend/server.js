@@ -174,7 +174,10 @@ app.post("/api/login", (req, res) => {
             });
         }
     } else {
-        res.sendStatus(403);
+        console.log("No data to login")
+        res.json({
+            error: "Login failed"
+        });
     }
 
 })
