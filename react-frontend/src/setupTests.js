@@ -1,6 +1,10 @@
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
+import { JSDOM } from 'jsdom';
+const { window } = new JSDOM('<!doctype html><html><body></body></html>');
+
+
 configure({ adapter: new Adapter() });
 
 
@@ -44,3 +48,6 @@ const localStorageMock = {
   clear: jest.fn()
 };
 global.localStorage = localStorageMock
+global.document = window.document;
+global.window = window;
+global.window.displayStyle = () => true;
