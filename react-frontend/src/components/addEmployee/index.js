@@ -21,6 +21,7 @@ export default class index extends Component {
                 redirect: true
             });
         }
+        window.displayStyle();
 
     }
 
