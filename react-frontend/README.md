@@ -24,6 +24,9 @@
           ]
       }
 
+
+  * node_modules/.bin/eslint -o code-quality.html -f html src/components/*
+
   * CI=true npm test -- --coverage - Run non interactive mode with coverage in Linux machine
   
   * set CI=true&&npm test -- --coverage - Run non interactive mode with coverage in Windows machine

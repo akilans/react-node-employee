@@ -1,7 +1,7 @@
 class Auth {
 
     static isAuthenticated = () => {
-        let token_data = JSON.parse(localStorage.getItem("token_data"));
+        let token_data = localStorage.getItem("token_data");
         if (!token_data) {
             return false;
         } else {
@@ -11,11 +11,11 @@ class Auth {
 
 
     static getToken = () => {
-        let token_data = JSON.parse(localStorage.getItem("token_data"));
+        let token_data = localStorage.getItem("token_data");
         if (!token_data) {
             return false;
           } else {
-            return token_data.token;
+            return token_data;
           }
     }
 }

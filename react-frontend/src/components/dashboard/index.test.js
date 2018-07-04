@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import Dashboard from "./";
 
@@ -18,6 +18,9 @@ describe('Testing Dashboard Component', () => {
             token_data: JSON.stringify(token_data),
             getItem: function () {
                 return token_data.token
+             },
+             setItem: function() {
+                token_data: JSON.stringify(token_data)
              }
         };
     });
@@ -28,7 +31,16 @@ describe('Testing Dashboard Component', () => {
 
         const wrapper = shallow(<Dashboard />);
 
-        expect(localStorage.getItem).toHaveBeenCalled();
+
+        wrapper.instance().getEmployees = jest.fn();
+        wrapper.update();
+
+        const tableID = <th scope="col">Id</th>
+
+
+        expect(wrapper.contains(tableID)).toEqual(true)
+
+        //expect(localStorage.getItem).toHaveBeenCalled();
 
         //const spy = jest.spyOn(wrapper.instance(), "deleteEmp");
         //wrapper.instance().forceUpdate();

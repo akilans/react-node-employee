@@ -16,8 +16,6 @@ import 'react-testing-library/cleanup-after-each';
 // this adds jest-dom's custom assertions
 import 'jest-dom/extend-expect';
 
-/*
-
 class LocalStorageMock {
     constructor() {
       this.store = {}
@@ -41,13 +39,14 @@ class LocalStorageMock {
   }
 
 global.localStorage = new LocalStorageMock
-*/
+/*
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   clear: jest.fn()
 };
 global.localStorage = localStorageMock
+*/
 global.document = window.document;
 global.window = window;
 global.window.displayStyle = () => true;

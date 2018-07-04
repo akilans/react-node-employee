@@ -20,6 +20,7 @@ class index extends Component {
                 redirect:true
             });
         }
+        window.displayStyle();
     }
 
     loginAction(e) {
@@ -47,11 +48,7 @@ class index extends Component {
                         login_error: "Login failed"
                     });
                 } else if (data.token) {
-                    let token_data={
-                        user:user_name,
-                        token:data.token
-                    };
-                    localStorage.setItem("token_data", JSON.stringify(token_data));
+                    localStorage.setItem("token_data", data.token);
                     this.setState({
                         login_error: "",
                         redirect:true
@@ -89,11 +86,11 @@ class index extends Component {
                                     <form onSubmit={this.loginAction}>
                                         <div className="form-group">
                                             <label htmlFor="userName">User Name</label>
-                                            <input type="text" className="form-control" id="userName" placeholder="Enter user name" ref="user_name" value=""/>
+                                            <input type="text" className="form-control" id="userName" placeholder="Enter user name" ref="user_name" />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="Password">Password</label>
-                                            <input type="password" className="form-control" id="Password" placeholder="Password" ref="password" value="" />
+                                            <input type="password" className="form-control" id="Password" placeholder="Password" ref="password" />
                                         </div>
 
                                         <button type="submit" className="btn btn-primary" >Submit</button>
