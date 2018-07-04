@@ -14,13 +14,14 @@ class index extends Component {
     }
 
     componentWillMount(){
+        
         //console.log(localStorage.getItem("token_data"));
         if(localStorage.getItem("token_data")){
             this.setState({
                 redirect:true
             });
         }
-        window.displayStyle();
+        window.displayStyle(name);
     }
 
     loginAction(e) {
