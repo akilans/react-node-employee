@@ -21,7 +21,7 @@ class index extends Component {
                 redirect:true
             });
         }
-        window.displayStyle(name);
+        window.displayStyle();
     }
 
     loginAction(e) {
