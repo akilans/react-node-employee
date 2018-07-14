@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const jwt = require("jsonwebtoken");
 const bodyParser = require('body-parser');
@@ -37,7 +39,7 @@ app.get("/api", (req, res) => {
 app.get("/api/getEmployees", verifyToken, (req, res) => {
 
     Employee.find({}).then(employees => {
-        console.log(employees);
+        //console.log(employees);
         res.json({
             employees: employees
         });
@@ -51,7 +53,7 @@ app.get("/api/getEmployee/:id", verifyToken, (req, res) => {
     let emp_id = req.params.id;
 
     Employee.find({id:emp_id}).then(employee => {
-        console.log(employee);
+        //console.log(employee);
         res.json({
             employee: employee
         });
@@ -83,7 +85,7 @@ app.post("/api/addEmployee", verifyToken, (req, res) => {
 
     if (req.body != null) {
         let emp_data = req.body;
-        console.log(emp_data);
+        //console.log(emp_data);
 
         let newEmp = new Employee();
         newEmp.id = emp_data.emp_id;
@@ -156,9 +158,9 @@ app.post("/api/login", (req, res) => {
 
     if (req.body != null) {
         let login_data = req.body;
-        console.log(login_data);
+        //console.log(login_data);
         if (login_data.user_name == "admin" && login_data.password == "admin") {
-            user = {
+            let user = {
                 name: login_data.user_name,
                 role: "admin"
             }
@@ -174,7 +176,7 @@ app.post("/api/login", (req, res) => {
             });
         }
     } else {
-        console.log("No data to login")
+        //console.log("No data to login")
         res.json({
             error: "Login failed"
         });
@@ -193,9 +195,9 @@ function verifyToken(req, res, next) {
         let token = authArray[1];
         jwt.verify(token, "secretkey", (err, decoded) => {
             if (err) {
-                console.log(err)
+                //console.log(err)
             } else {
-                console.log(decoded);
+                //console.log(decoded);
                 next();
             }
         })
@@ -209,3 +211,5 @@ function verifyToken(req, res, next) {
 app.listen(5000, () => {
     console.log("Application started on port 5000");
 })
+
+module.exports = app;

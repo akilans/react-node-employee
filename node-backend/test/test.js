@@ -3,6 +3,8 @@ let chaiHttp = require('chai-http');
 let should = chai.should();
 let expect = chai.expect;
 
+let server = require("../server.js");
+
 chai.use(chaiHttp);
 
 let url = "http://localhost:5000/api";
@@ -30,6 +32,7 @@ describe("Testing API call without login", () => {  // <= Pass in done callback
     });
 
 })
+
 
 
 describe("Testing API call with login", () => {
