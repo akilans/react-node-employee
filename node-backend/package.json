@@ -24,7 +24,7 @@
   },
   "scripts": {
     "lint": "eslint -o quality.html -f html server.js",
-    "test": "nyc mocha --recursive --exit"
+    "test": "nyc mocha --recursive --exit --timeout 10000"
   },
   "author": "Akilan",
   "license": "ISC",
