@@ -14,10 +14,11 @@ const Employee = mongoose.model('employees');
 const app = express();
 app.use(cors()); // Allow Cross origin request
 
-const db = require("./config/dev");
+require("dotenv").config();
+const PORT = process.env.PORT || 5000;
 
 
-mongoose.connect(db.mongoURL, (err) => {
+mongoose.connect(process.env.DB_URL, (err) => {
     if (err) {
         console.log(err);
     } else {
@@ -122,7 +123,7 @@ app.post("/api/editEmployee", verifyToken, (req, res) => {
         let emp_data = req.body;
         console.log(emp_data);
 
-       let uid = emp_data.emp_uid;
+        let uid = emp_data.emp_uid;
 
         let updateData = {
             id: emp_data.emp_id,
@@ -208,8 +209,8 @@ function verifyToken(req, res, next) {
 }
 
 // Starting app on port 5000
-app.listen(5000, () => {
-    console.log("Application started on port 5000");
+app.listen(PORT, () => {
+    console.log(`Application started on port ${PORT}`);
 })
 
 module.exports = app;

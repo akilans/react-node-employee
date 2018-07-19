@@ -15,6 +15,6 @@ module.exports = {
         "quotes":1,
         "semi": 1,
         "no-unused-vars":1,
-        "no-console":1
+        "no-console":0
     }
 };

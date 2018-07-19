@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom"
 
 class index extends Component {
 
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         localStorage.removeItem("token_data");
     }
 

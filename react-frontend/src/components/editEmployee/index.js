@@ -16,7 +16,7 @@ export default class index extends Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
 
         if (!Auth.isAuthenticated()) {
             this.setState({
@@ -34,7 +34,7 @@ export default class index extends Component {
 
     getEmployee() {
         let emp_id = this.props.match.params.id;
-        let url = `http://localhost:5000/api/getEmployee/${emp_id}`;
+        let url = `${process.env.REACT_APP_API_URL}/getEmployee/${emp_id}`;
 
         fetch(url, {
             method: 'get',
@@ -115,7 +115,7 @@ export default class index extends Component {
             emp_ext: emp_ext
         }
 
-        fetch('http://localhost:5000/api/editEmployee', {
+        fetch(`${process.env.REACT_APP_API_URL}/editEmployee`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json, text/plain, */*',

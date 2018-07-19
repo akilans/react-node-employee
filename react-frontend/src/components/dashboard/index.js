@@ -37,7 +37,7 @@ class index extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
 
     if (!Auth.isAuthenticated()) {
       this.setState({
@@ -54,7 +54,7 @@ class index extends Component {
 
   deleteEmp(id){
 
-      let url = `http://localhost:5000/api/deleteEmployee/${id}`;
+      let url = `${process.env.REACT_APP_API_URL}/deleteEmployee/${id}`;
 
 
       fetch(url, {
@@ -88,7 +88,7 @@ class index extends Component {
   }
 
   getEmployees() {
-    fetch("http://localhost:5000/api/getEmployees", {
+    fetch(`${process.env.REACT_APP_API_URL}/getEmployees`, {
       method: 'get',
       headers: {
         'Accept': 'application/json, text/plain, */*',

@@ -14,7 +14,7 @@ export default class index extends Component {
         };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
 
         if (!Auth.isAuthenticated()) {
             this.setState({
@@ -44,7 +44,7 @@ export default class index extends Component {
             emp_ext: emp_ext
         }
 
-        fetch('http://localhost:5000/api/addEmployee', {
+        fetch(`${process.env.REACT_APP_API_URL}/addEmployee`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json, text/plain, */*',

@@ -13,7 +13,8 @@ class index extends Component {
         }
     }
 
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
+        console.log(process.env.REACT_APP_API_URL);
         
         //console.log(localStorage.getItem("token_data"));
         if(localStorage.getItem("token_data")){
@@ -34,7 +35,7 @@ class index extends Component {
             password: this.refs.password.value
         }
 
-        fetch('http://localhost:5000/api/login', {
+        fetch(`${process.env.REACT_APP_API_URL}/login`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
