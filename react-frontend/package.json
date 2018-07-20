@@ -12,7 +12,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "node_modules/.bin/eslint -o quality.html -f html src/components/**/*.js",
+    "lint": "eslint -o quality.html -f html src/components/**/*.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "npm run lint && npm test -- --coverage && npm run build"

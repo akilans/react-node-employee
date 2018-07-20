@@ -1,0 +1,38 @@
+node {
+   def nodeHome = tool "NODE_PATH"
+   env.PATH="${env.PATH}:${nodeHome}/"
+   
+   stage("Checkout Source"){
+       checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/akilans/react-node-employee.git']]])
+   }
+   
+   stage("Install Dependencies"){
+     dir('node-backend') {
+         if(isUnix()){
+                sh 'npm install'
+         }else{
+                bat 'npm install'
+         }
+     }
+   }
+   
+   stage("Code Quality"){
+     dir('node-backend') {
+         if(isUnix()){
+                sh 'npm run lint'
+         }else{
+                bat 'npm run lint'
+         }
+     }
+   }
+   
+   stage("Unit Test"){
+     dir('node-backend') {
+         if(isUnix()){
+                sh 'npm run test'
+         }else{
+                bat 'npm run test'
+         }
+     }
+   }
+}
