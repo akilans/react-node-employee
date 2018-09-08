@@ -18,21 +18,15 @@ node {
    
    stage("Code Quality"){
      dir('node-backend') {
-         if(isUnix()){
-                sh 'npm run lint'
-         }else{
-                bat 'npm run lint'
-         }
+             sh 'npm run lint'
+             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'quality.html', reportName: 'Quality Report', reportTitles: ''])
      }
    }
    
    stage("Unit Test"){
      dir('node-backend') {
-         if(isUnix()){
-                sh 'npm run test'
-         }else{
-                bat 'npm run test'
-         }
+            sh 'npm run test'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'coverage', reportFiles: 'index.html', reportName: 'Coverage Report', reportTitles: ''])
      }
    }
 }
