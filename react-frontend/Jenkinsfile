@@ -8,41 +8,27 @@ node {
    
    stage("Install Dependencies"){
      dir('react-frontend') {
-         if(isUnix()){
-                sh 'npm install'
-         }else{
-                bat 'npm install'
-         }
+         sh 'npm install'
      }
    }
    
    stage("Code Quality"){
      dir('react-frontend') {
-         if(isUnix()){
-                sh 'npm run lint'
-         }else{
-                bat 'npm run lint'
-         }
+         sh 'npm run lint'
+         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'quality.html', reportName: 'Quality Report', reportTitles: ''])
      }
    }
    
    stage("Unit Test"){
      dir('react-frontend') {
-         if(isUnix()){
-                sh 'npm run test -- --coverage'
-         }else{
-                bat 'npm run test -- --coverage'
-         }
+         sh 'npm run test -- --coverage'
+         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'coverage', reportFiles: 'index.html', reportName: 'Coverage Report', reportTitles: ''])
      }
    }
    
    stage("Build"){
      dir('react-frontend') {
-         if(isUnix()){
-                sh 'npm run build'
-         }else{
-                bat 'npm run build'
-         }
+         sh 'npm run build'
      }
    }
    
