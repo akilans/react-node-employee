@@ -22,7 +22,7 @@ node {
    stage("Unit Test"){
      dir('react-frontend') {
          sh 'npm run test -- --coverage'
-         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'coverage', reportFiles: 'index.html', reportName: 'Coverage Report', reportTitles: ''])
+         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Coverage Report', reportTitles: ''])
      }
    }
    
